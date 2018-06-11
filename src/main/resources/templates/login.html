@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"  xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>信息存储系统</title>
+    <link href="https://cdn.bootcss.com/element-ui/1.4.10/theme-default/index.css" rel="stylesheet">
+
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        font-family: 'Microsoft YaHei UI Light';
+    }
+/*url("/static/img/back.png")*/
+    html, body {
+        width: 100%;
+        height: 100%;
+        background: url("/img/back.png") no-repeat center;
+        background-size: cover;
+        position: relative;
+    }
+
+    html,body{
+        width: 100%;
+        height: 100%;
+        background: url("/img/back.png") no-repeat center;
+        background-size: cover;
+        position: relative;
+    }
+    .login {
+        padding-top: 100px;
+    }
+    .login .el-card {
+        width: 250px;
+        border: none;
+        margin: 0 auto;
+        box-shadow: 1px 1px 50px #aebed2;
+    }
+    .login .logo{
+        font-size: 18px;
+        color: #ffffff;
+        font-weight: bold;
+        padding: 30px 0 90px;
+        margin: -20px -20px 0;
+        background: url('/img/login-back.png') no-repeat top center #fff;
+        background-size: 100% auto;
+        text-align: center;
+    }
+    #msg {
+        padding: 10px 15px;
+        font-size: 14px;
+        color: #f00;
+    }
+</style>
+<body>
+<div id="app" class="login">
+    <div class="el-card">
+        <div class="el-card__body"><h2 class="logo">信息存储</h2>
+            <form class="el-form el-form--label-top" _lpchecked="1"
+                  th:action="@{/j_spring_security_check}" method="post">
+                <div class="el-form-item">
+                    <div class="el-form-item__content">
+                        <div class="el-input el-input-group el-input-group--append">
+                            <input id="username" name="username"
+                                   autocomplete="off" placeholder="用户名" type="text" rows="2"
+                                   validateevent="true" class="el-input__inner" data-enpass.usermodified="yes">
+                        </div>
+                    </div>
+                </div>
+                <div class="el-form-item">
+                    <div class="el-form-item__content">
+                        <div class="el-input">
+                            <input type="password" id="password" name="password"
+                                   autocomplete="off" placeholder="密码" rows="2"
+                                   validateevent="true" class="el-input__inner" data-enpass.usermodified="yes">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="el-form-item">
+                    <div class="el-form-item__content">
+                        <button type="submit" class="el-button el-button--primary" style="width: 100%;">
+                            <span>登录</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="el-form-item">
+                    <div class="el-form-item__content">
+                        <p id="msg" th:text="${msg}"></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

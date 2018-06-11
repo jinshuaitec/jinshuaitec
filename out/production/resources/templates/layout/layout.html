@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <title>信息存储系统</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet"/>
+    <link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet" />
+    <link th:href="@{/js/plugins/gritter/jquery.gritter.css}" rel="stylesheet"/>
+    <link th:href="@{/css/animate.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+
+    <script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+    <script th:src="@{/js/inspinia.js}"></script>
+    <script th:src="@{/js/base.js}"></script>
+    <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
+    <style>
+        .menu-label {
+            font-size: 16px !important;
+        }
+
+        .user-name {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="wrapper">
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                    <span>
+                        <img alt="image" class="img-circle" th:src="@{/img/profile_small.jpg}"/>
+                    </span>
+                        <div class="navbar-header pull-right">
+                            <a class="navbar-minimalize minimalize-styl-2 btn" href="#"><i class="fa fa-bars"></i> </a>
+                        </div>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"></a>
+                            <span th:text="${session.SPRING_SECURITY_CONTEXT.authentication.principal.name}"
+                                  class="block m-t-xs font-bold "><b class="caret"></b></span> </a>
+                        <!--<input type="hidden" id="role" th:value="${session.SPRING_SECURITY_CONTEXT.authentication.principal.roleName}">-->
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li><a onclick="changePwd()"><i class="fa fa-gear"></i> 修改密码</a></li>
+                            <li><a th:href="@{/logout}"><i class="fa fa-sign-out"></i> 退出登录</a></li>
+                        </ul>
+                    </div>
+                    <div class="logo-element">
+                        <i class="fa fa-bars navbar-minimalize" style="cursor: pointer"></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <ul class="nav navbar-top-links navbar-right backBtn">
+        <li>
+            <a href="#" style="font-weight: normal;">
+                <i class="fa fa-sign-out"></i> 退出
+            </a>
+        </li>
+    </ul>
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <span class="m-r-sm text-muted welcome-message">欢迎登录！</span>
+                    </li>
+                    <li>
+                        <a href="login.html" th:href="@{/login}">
+                            <i class="fa fa-sign-out"></i> 退出
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div layout:fragment="header"></div>
+
+        <div layout:fragment="content"></div>
+
+
+        <div class="footer" th:replace="layout/footer :: footer">
+
+        </div>
+    </div>
+
+</div>
+</body>
+<script type="text/javascript" th:inline="javascript">
+    var baseUrl = [[${#httpServletRequest.getContextPath()}]];
+    $(function () {
+        $.ajax({
+            url: [[${#httpServletRequest.getContextPath()}]] + '/admin/menu/load-menu',
+            cache: false,
+            type: 'get',
+            dataType: "json",
+            success: function (r) {
+                var str = '';
+                $.each(r.menu, function (i, value) {
+                    str += '<li>';
+                    var url = value.url;
+                    if (url == '#') {
+                        str += '<a onclick="checkin(this);" href="' + value.url + '">';
+                    } else {
+                        str += '<a href="' + [[${#httpServletRequest.getContextPath()}]] + value.url +'">';
+                    }
+                    str += '<i class="' + value.logo + '"></i>' +
+                            '<span class="nav-label menu-label">' + value.name + ' </span>';
+                    str += '</a>';
+                });
+                $('#side-menu').append(str);
+                menu();
+
+            }
+        });
+    });
+    function menu() {
+        var titleValue = $.trim($('#menuTitle').text());
+        var objs = $('.nav-label');
+        for (var i = 0; i < objs.length; i++) {
+            if ($.trim($(objs[i]).text()) === titleValue) {
+                $(objs[i]).parent().parent().addClass('active');
+            }
+        }
+        var objsUl = $('.nav-second-level > li > a');
+        for (var j = 0; j < objsUl.length; j++) {
+            if ($.trim($(objsUl[j]).text()) === titleValue) {
+                $(objsUl[j]).parent().addClass('active');
+                $(objsUl[j]).parent().parent().addClass('nav nav-second-level collapse in');
+            }
+        }
+    }
+    function checkin(obj) {
+        if ($(obj).next('ul').hasClass('in')) {
+            $(obj).next('ul').removeClass('in');
+        } else {
+            $(obj).addClass('active').next('ul').addClass('in');
+        }
+    }
+
+</script>
+</html>

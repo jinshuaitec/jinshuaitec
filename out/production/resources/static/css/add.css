@@ -1,0 +1,97 @@
+
+.index-img .col-lg-2{
+  padding: 0;
+  height: 120px;
+  position: relative;
+}
+.index-img .col-lg-2 .contact-box{
+  width: 100%;
+  height: 120px;
+  padding: 29px 0;
+}
+.index-img .col-lg-2 .contact-box img{
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+}
+.index-img .projectfile{
+  width: 100%;
+  height: 120px;
+  position: absolute;
+  top:0;
+  left:0;
+  opacity: 0;
+  z-index: 999;
+  cursor: pointer;
+}
+.drop-img .col-lg-3{
+  height: 120px;
+}
+.drop-img .col-lg-3 .contact-box,.drop-img .col-lg-3 .contact-box .col-sm-12,.drop-img .col-lg-3 .contact-box .col-sm-12 .text-center,.drop-img .col-lg-3 .contact-box img{
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.drop-img .col-lg-3 .contact-box a{
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+}
+.drop-img .col-lg-3 .contact-box,.drop-img .col-sm-12{
+  padding: 0;
+}
+.drop-img .col-lg-3 .contact-box .col-sm-12{
+  position: relative;
+}
+.delete{
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 999;
+}
+.delete input{
+  width: 100%;
+  height: 100%;
+}
+.public .contact-box{
+  padding: 15px;
+}
+.public .col-sm-12{
+  padding: 0;
+  position: relative;
+}
+.public .col-lg-4{
+  /*height: 190px;*/
+}
+#public{
+  position: relative;
+}
+#public input{
+  width: 90px;
+  height: 35px;
+  z-index: 9999;
+  opacity: 0;
+  margin-left: -45px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+}
+.img-name-p{
+  display: none;
+}
+.tb-overflow{
+  height: 280px;
+}
+
+.dangwu a{
+  width: 100%;
+  display: inline-block;
+}
+.dangwu .category-box{
+  height: 150px;
+  color: #333333;
+  line-height: 150px;
+  font-size: 16px;
+}

@@ -1,0 +1,70 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.13.BUILD-SNAPSHOT'
+	}
+	repositories {
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
+
+group = 'com.jinstec'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.spring.io/snapshot" }
+	maven { url "https://repo.spring.io/milestone" }
+}
+
+configurations {
+	providedRuntime
+	compile.exclude group:'ch.qos.logback'
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+	compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-aop')
+	compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2')
+	compile group: 'org.mybatis.generator', name: 'mybatis-generator-core', version: '1.3.5'
+	compile group: 'com.github.pagehelper', name: 'pagehelper', version: '5.1.2'
+	runtime('org.springframework.boot:spring-boot-devtools')
+	runtime('mysql:mysql-connector-java')
+	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.springframework.security:spring-security-test')
+	compile ("org.springframework.boot:spring-boot-starter-web")
+	compile ('org.springframework.boot:spring-boot-starter-log4j2')
+	compile group: 'com.alibaba', name: 'druid', version: '1.0.31'
+
+	compile 'com.fasterxml.jackson.core:jackson-databind:2.6.4'
+	compile 'com.fasterxml.jackson.core:jackson-core:2.6.4'
+	compile 'com.fasterxml.jackson.core:jackson-annotations:2.6.4'
+
+	compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '1.3.0'
+
+	compile 'io.springfox:springfox-swagger2:2.6.1'
+	compile 'io.springfox:springfox-swagger-ui:2.6.1'
+
+	// nekohtml 简化hthymeleaf
+	compile('net.sourceforge.nekohtml:nekohtml:1.9.22')
+
+		compile  'org.json:json:20160212'
+		compile 'org.projectlombok:lombok:1.16.8'
+
+	compile('org.springframework.boot:spring-boot-starter-data-redis')
+
+	compile  'commons-httpclient:commons-httpclient:3.1'
+}

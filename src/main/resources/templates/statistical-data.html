@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorator="layout/layout"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据统计</title>
+  <link rel="stylesheet" th:href="@{/static/css/add.css}">
+  <script th:src="@{/static/js/divscroll.js}"></script>
+</head>
+<body>
+<div id="wrapper">
+
+    <!--layouts.html页的page-heading模块-->
+    <div class="row wrapper border-bottom white-bg page-heading" layout:fragment="header">
+      <div class="col-lg-10">
+        <h2>主页/数据统计</h2>
+        <h2 id="menuTitle" style="display: none">数据统计</h2>
+      </div>
+    </div>
+
+    <div class="wrapper wrapper-content white-bg animated fadeInRight" layout:fragment="content">
+      <div class="resizable-panels">
+        <div class="ibox-title">
+          <h5>
+            统计分析
+          </h5>
+        </div>
+        <div class="ibox-content"></div>
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="ibox float-e-margins btn-default">
+            <div class="ibox-title">
+              <h5>JAVA</h5>
+            </div>
+            <div class="ibox-content">
+              <h2 class="no-margins" th:text="JAVA"></h2>
+              <div class="stat-percent font-bold text-success">实时数据</div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>MYSQL</h5>
+            </div>
+            <div class="ibox-content">
+              <table class="table table-hover no-margins">
+                <thead>
+
+                </thead>
+                <tbody>
+                <tr >
+                  <td th:text="MYSQL"></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>MYBATIS</h5>
+            </div>
+            <div class="ibox-content">
+              <table class="table table-hover no-margins">
+                <thead>
+                </thead>
+                <tbody>
+                <tr>
+                  <td th:text="MYBATIS"></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>SPRINGBOOT</h5>
+            </div>
+            <div class="ibox-content">
+              <table class="table table-hover no-margins" >
+                <thead >
+
+                </thead>
+                <tbody>
+                <tr >
+                  <td th:text="SPRINGBOOT"></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+<script type="text/javascript" th:inline="javascript">
+</script>
+  <script>
+      $('.tb-overflow').niceScroll({
+          cursorcolor: '#ededed',//#CC0071 光标颜色
+          cursoropacitymax: 1, //改变不透明度非常光标处于活动状态（scrollabar“可见”状态），范围从1到0
+          touchbehavior: false, //使光标拖动滚动像在台式电脑触摸设备
+          cursorwidth: '5px', //像素光标的宽度
+          cursorborder: '2', //   游标边框css定义
+          cursorborderradius: '5px',//以像素为光标边界半径
+          autohidemode: true //是否隐藏滚动条
+      });
+  </script>
+</div>
+</div>
+</body>
+</html>

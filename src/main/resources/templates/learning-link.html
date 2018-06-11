@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorator="layout/layout"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学习链接</title>
+  <link th:href="@{/css/plugins/dataTables/datatables.min.css}" rel="stylesheet" />
+  <script th:src="@{/js/plugins/dataTables/datatables.min.js}"></script>
+  <script th:src="@{/js/plugins/dataTables/datatables.message.zh_cn.js}"></script>
+</head>
+<body>
+<div id="page-wrapper" class="gray-bg dashbard-1">
+  <!--layouts.html页的page-heading模块-->
+  <div class="row wrapper border-bottom white-bg page-heading" layout:fragment="header">
+    <div class="col-lg-10">
+      <h2>主页/学习链接</h2>
+      <h2 id="menuTitle" style="display: none">学习链接</h2>
+    </div>
+  </div>
+
+  <!--table_data_tables.html-->
+  <div class="wrapper wrapper-content animated fadeInRight" layout:fragment="content">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+          <div class="ibox-title col-lg-12">
+              <div class="col-sm-5 m-b-xs"></div>
+              <div class="col-sm-7 m-b-xs text-right">
+                  <label>关键字：</label><input id="queryParamter" style="height: 25px" placeholder="标题、作者、或关键字"/>&nbsp;
+                  <button id="search" type="button" onclick="search()" class="btn btn-search">查询</button>
+                  <button id="reset" type="button" onclick="reset()" class="btn btn-search">重置</button>
+                  <button id="add" type="button" name="btn" onclick="saveInfo()" class="btn btn-success">新增</button>
+                  <button type="button" id="export" class="btn btn-default">导出</button>
+              </div>
+          </div>
+          <div class="form-group" id="toastTypeGroup">
+            <table class="table table-striped table-bordered table-hover "
+                   id="editable">
+              <thead>
+              <tr>
+                <th><input type="checkbox" class="checkAll" id="select-all"/></th>
+                <th class="text-center">标题</th>
+                <th class="text-center">作者</th>
+                <th class="text-center">类型</th>
+                <th class="text-center">创建时间</th>
+                <th class="text-center">编辑</th>
+              </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" th:inline="javascript">
+        var onTable;
+        $(document).ready(function () {
+            onTable = $('#editable').DataTable({
+                searching: false,
+                "sPaginationType": "simple_numbers",
+                "oLanguage": {
+                    "sLengthMenu": "每页显示  _MENU_ 条记录",
+                    "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+                    "oPaginate": {
+                        "sFirst": "首页",
+                        "sPrevious": "前一页",
+                        "sNext": "后一页",
+                        "sLast": "尾页"
+                    },
+                    "sZeroRecords": "抱歉， 没有找到数据",
+                    "sInfoEmpty": "没有数据",
+                    "sLoadingRecords": "加载中"
+                },
+                "bAutoWidth": true,
+                "bProcessing": true,
+                "bServerSide": true,
+                "bFilter": true,
+                "iDisplayLength": 10,
+                "bLengthChange": true,
+                "sAjaxSource": [[${#httpServletRequest.getContextPath()}]] + "/learning-links/list-display",
+                "fnServerParams": function (aoData) {//向服务器传额外的参数
+                    aoData.push({"name": "search", "value": $('#queryParamter').val()});
+                },
+                "aoColumns": [
+                    {
+                        "mData": function (obj) {
+                            return '<th align="center"><input type="checkbox" class="checkbox_select" name="tableCheck" value="' + obj.id + '" /></th>';
+                        }
+                    },
+                    {"mData":"title"},//标题
+                    {"mData":"author"},//作者
+                    {"mData":"type"},//类型
+                    {"mData":"createDate"},//创建时间
+                    {
+                        "mData": function (obj) {
+                            var operate = '<a class=" btn-primary btn-sm" href=' + [[${#httpServletRequest.getContextPath()}]] + '/learning-links/' + obj.id + '  title="编辑"><i class="fa fa-edit" ></i></a>';
+                            return operate;
+                        }, "sWidth": "10%"
+                    }
+                ],
+                "ordering": false
+            });
+        });
+
+    </script>
+    <!--按钮-->
+    <script type="text/javascript" th:inline="javascript">
+        function saveInfo() {
+            window.location.href = [[${#httpServletRequest.getContextPath()}]] +"/page/learning-link/save-page";
+        }
+        function reset() {
+            $("#queryParamter").val("");
+            onTable.draw();
+        }
+        
+        function search() {
+            onTable.draw();
+        }
+    </script>
+  </div>
+</div>
+</body>
+</html>

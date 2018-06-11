@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorator="layout/layout"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>软件链接</title>
+    <link th:href="@{/css/plugins/dataTables/datatables.min.css}" rel="stylesheet" />
+    <script th:src="@{/js/plugins/dataTables/datatables.min.js}"></script>
+    <script th:src="@{/js/plugins/dataTables/datatables.message.zh_cn.js}"></script>
+</head>
+<body>
+<div id="page-wrapper" class="gray-bg dashbard-1">
+    <!--layouts.html页的page-heading模块-->
+    <div class="row wrapper border-bottom white-bg page-heading" layout:fragment="header">
+        <div class="col-lg-10">
+            <h2>主页/软件链接</h2>
+            <h2 id="menuTitle" style="display: none">软件链接</h2>
+        </div>
+    </div>
+
+    <!--table_data_tables.html-->
+    <div class="wrapper wrapper-content animated fadeInRight" layout:fragment="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title col-lg-12">
+                        <div class="col-sm-6 m-b-xs">
+                            <form class="form-horizontal">
+                                <div class="form-group" id="data_5">
+                                    <label class="font-normal control-label pull-left">发布日期：</label>
+                                    <div class=" col-sm-4 input-daterange input-group" id="datepicker">
+                                        <input type="date" id="startDate" class="input-sm form-control" name="start" value="2018-01-01"/>
+                                        <span class="input-group-addon">至</span>
+                                        <input type="date" id="endDate" class="input-sm form-control" name="end" value="2018-12-12" />
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="col-sm-6 m-b-xs text-right">
+                            <label>关键字：</label><input id="inputInfo" style="height: 25px;margin-right: 30px;width: 170px" placeholder="标题,类型或关键字"/>
+                            <button id="search" type="button" onclick="search()" class="btn btn-search">查询</button>
+                            <button id="reset" type="button" onclick="reset()" class="btn btn-search">重置</button>
+                            <button id="add" type="button" class="btn btn-success">新增</button>
+                            <button id="delete" type="button" class="btn btn-warning">删除</button>
+                        </div>
+                    </div>
+                </div>
+                    <div class="form-group" id="toastTypeGroup">
+                        <table class="table table-striped table-bordered table-hover "
+                               id="editable">
+                            <thead>
+                            <tr>
+                                <th><input type="checkbox" class="checkAll" id="select-all"/></th>
+                                <th>标题</th>
+                                <th>作者</th>
+                                <th>类型</th>
+                                <th>关键字</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        <!--dataTable-->
+<script  th:inline="javascript">
+    var onTable;
+    $(document).ready(function () {
+       onTable = $('#editable').DataTable({
+            searching: false,
+            "sPaginationType": "simple_numbers",
+            "oLanguage": {
+                "sLengthMenu": "每页显示  _MENU_ 条记录",
+                "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "前一页",
+                    "sNext": "后一页",
+                    "sLast": "尾页"
+                },
+                "sZeroRecords": "抱歉， 没有找到数据",
+                "sInfoEmpty": "没有数据",
+                "sLoadingRecords": "加载中"
+            },
+            "bAutoWidth": true,
+            "bProcessing": true,
+            "bServerSide": true,
+            "bFilter": true,
+            "iDisplayLength": 10,
+            "bLengthChange": true,
+            "sAjaxSource": [[${#httpServletRequest.getContextPath()}]] + "/software-links/list-display",
+            "fnServerParams": function (aoData) {//向服务器传额外的参数
+                aoData.push({"name": "search", "value": $('#inputInfo').val()});
+            },
+            "aoColumns": [
+                {
+                    "mData": function (obj) {
+                        return '<th align="center"><input type="checkbox" class="checkbox_select" name="tableCheck" value="' + obj.id + '" /></th>';
+                    }
+                },
+                {"mData": "title"},
+                {"mData": "author"},
+                {"mData": "type"},
+                {"mData": "keyword"},
+                {
+                    "mData": function (obj) {
+                        var operate = '<a class=" btn-primary btn-sm" href=' + [[${#httpServletRequest.getContextPath()}]] + '/software-links/' + obj.id + '  title="编辑"><i class="fa fa-edit" ></i></a>';
+                        return operate;
+                    },
+                }
+            ],
+           "ordering": false
+       });
+    });
+
+</script>
+        <!--按钮-->
+        <script type="text/javascript" th:inline="javascript">
+            $('#add').click(function () {
+                window.location.href = [[${#httpServletRequest.getContextPath()}]] +"/page/software-link/save-page";
+            })
+            
+            function reset() {
+                $("#inputInfo").val("");
+                onTable.draw();
+            }
+            
+            function search() {
+                onTable.draw();
+            }
+        </script>
+    </div>
+</div>
+</div>
+</body>
+</html>
